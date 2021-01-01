@@ -41,6 +41,9 @@ INSTALLED_APPS = [
 
     # restful
     'rest_framework',
+
+    # api_v1
+    'api_v1',
 ]
 
 MIDDLEWARE = [
