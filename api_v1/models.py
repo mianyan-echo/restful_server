@@ -44,3 +44,5 @@ class IpCamera(models.Model):
         indexes = [
             models.Index(fields=['geohash'], name='IpCam_geohash_idx')
         ]
+
+# TODO: replay,保存回放相关的信息
