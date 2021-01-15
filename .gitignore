@@ -2,3 +2,4 @@
 .idea
 restful_server/__pycache__/
 /__pycache__/
+db.sqlite3
