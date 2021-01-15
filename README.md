@@ -10,7 +10,7 @@ Python              3.8.5
     sqlparse            0.4.1
 ```
 ***
-# 初始化
+## 初始化
 ```shell
 python -m venv venv
 ./venv/Scripts/activate
