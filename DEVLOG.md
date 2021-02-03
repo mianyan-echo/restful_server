@@ -17,3 +17,6 @@ ffmpeg -f dshow -i video="EasyCamera" -vcodec h264_qsv -vprofile baseline -f flv
   * 可以直接对接后期可能增加的redis等缓存中间件
   * 缺点是有一定的系统误差
 * 关于nginx的反向代理，这个很常用，也可以消除跨域的问题。前端build好以后由nginx提供静态服务，只将对api的请求转发到django服务器上（这段中间应该还有uWSGI服务做转接）
+***
+## 2021.1.27
+* 关于华为aarch64架构的鲲鹏920云服务器，在安装`uWSGI`时报错缺少`Python.h`的问题，系统为centos8。解决办法是需要`platform-python-devel.aarch64`这一源码库，并不是正常的`python-devel`
