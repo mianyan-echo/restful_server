@@ -1,9 +1,12 @@
 from django.http import Http404
+from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 
 from .models import IpCamera
 from .serializers import IpCameraSerializer
+from .permissions import TokenIsOwnerAndReadOnly
 
 # Create your views here.
 
@@ -11,18 +14,24 @@ from .serializers import IpCameraSerializer
 class IpCameraViewSet(viewsets.ModelViewSet):
     # queryset = IpCamera.objects.all()
     serializer_class = IpCameraSerializer
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (TokenIsOwnerAndReadOnly, )
 
     def get_queryset(self):
+        # 获取归用户所有的ip摄像头
+        owner = self.request.user
+        owner_cameras = owner.ipcamera_set
+
         _geohash = self.request.query_params.get('geohash', None)
         _range = self.request.query_params.get('range', '')
         if _geohash:
             if _range.isdigit() and len(_geohash) > int(_range):
                 _range = int(_range)
-                queryset = IpCamera.objects.filter(geohash__startswith=_geohash[:len(_geohash)-_range])
+                queryset = owner_cameras.filter(geohash__startswith=_geohash[:len(_geohash)-_range])
             else:
-                queryset = IpCamera.objects.filter(geohash=_geohash)
+                queryset = owner_cameras.filter(geohash=_geohash)
             return queryset
-        return IpCamera.objects.all()
+        return owner_cameras.all()
 
     # 目前这两个是临时写法，实际项目开发中这么写会变得极不好维护，
     # 实际应采用framework自带的过滤器、筛选器、查找器
