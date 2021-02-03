@@ -20,3 +20,8 @@ ffmpeg -f dshow -i video="EasyCamera" -vcodec h264_qsv -vprofile baseline -f flv
 ***
 ## 2021.1.27
 * 关于华为aarch64架构的鲲鹏920云服务器，在安装`uWSGI`时报错缺少`Python.h`的问题，系统为centos8。解决办法是需要`platform-python-devel.aarch64`这一源码库，并不是正常的`python-devel`
+***
+## 2021.2.03
+* 用户认证(auth)与鉴权(permission)其实是两个不同的过程。
+* 对于一个api的请求，会先进行某种方式的用户认证获取到request.user与request.auth，这一行为在执行api对应的view之前。
+* 而鉴权permission的过程在api对应的view中，属于程序员要自己实现的逻辑。
