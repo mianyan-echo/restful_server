@@ -1,10 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 import uuid
 
 # Create your models here.
 
 
 class IpCamera(models.Model):
+    # 从属用户，用于鉴权
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+
     # 摄像头id,使用UUID V4生成伪随机的全局唯一标识
     cam_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
